@@ -1,0 +1,70 @@
+/* Background */
+body {
+  font-family: Arial, sans-serif;
+  background: url("https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1350&q=80") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+/* Container */
+.container {
+  background: rgba(0, 0, 0, 0.75);
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Headings */
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Form elements */
+label {
+  display: block;
+  margin: 15px 0 5px;
+  text-align: left;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #28a745;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #218838;
+}
+
+/* Result */
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffd700;
+}

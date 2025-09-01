@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bangalore House Price Predictor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🏠 Bangalore House Price Prediction</h1>
+
+    <form id="prediction-form">
+      <!-- Location -->
+      <label for="location">Location</label>
+      <select id="location" name="location" required>
+        <option value="">Loading locations...</option>
+      </select>
+
+      <!-- Total Sqft -->
+      <label for="sqft">Total Sqft</label>
+      <input type="number" id="sqft" name="sqft" placeholder="Enter total sqft" required />
+
+      <!-- BHK -->
+      <label for="bhk">BHK</label>
+      <select id="bhk" name="bhk" required>
+        <option value="">-- Select BHK --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <!-- Bath -->
+      <label for="bath">Bathrooms</label>
+      <select id="bath" name="bath" required>
+        <option value="">-- Select Bath --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <!-- Submit -->
+      <button type="submit">Predict Price</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
