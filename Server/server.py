@@ -1,61 +1,62 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
-import numpy as np
 import pandas as pd
-from flask_cors import CORS  # to allow frontend to connect
+import numpy as np
+import os
+import joblib
 
-app = Flask(__name__)
-CORS(app)
+app = Flask(__name__, template_folder="../Client", static_folder="../Client")
 
 # Load model & encoder
-model = pickle.load(open("../Model/Pickle/xgb_model.pkl", "rb"))
-encoder = pickle.load(open("../Model/Pickle/location_encoder.pkl", "rb"))
-columns = pickle.load(open("../Model/Pickle/feature_columns.pkl", "rb"))  # feature columns
+model = joblib.load("../Model/Pickle/model.pkl")
+encoder = joblib.load("../Model/Pickle/encoder.pkl")
+feature_columns = joblib.load("../Model/Pickle/feature_columns.pkl")
 
-# --- API ROUTES ---
+# ------------------- ROUTES -------------------
 
-@app.route("/predict", methods=["POST"])
+# Serve frontend
+@app.route('/')
+def home():
+    return render_template("index.html")
+
+# API: get all locations
+@app.route('/locations', methods=['GET'])
+def get_locations():
+    locations = encoder.categories_[0].tolist()
+    return jsonify(locations)
+
+# API: predict price
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
-        location = data["location"]
-        sqft = float(data["total_sqft"])
-        bhk = int(data["bhk"])
-        bath = int(data["bath"])
+        location = data['location']
+        sqft = float(data['total_sqft'])
+        bhk = int(data['bhk'])
+        bath = int(data['bath'])
 
-        # Create DataFrame
-        df = pd.DataFrame([[location, sqft, bhk, bath]],
-                          columns=["location", "total_sqft", "bhk", "bath"])
+        # Build dataframe
+        df = pd.DataFrame([[location, sqft, bhk, bath]], 
+                          columns=['location','total_sqft','bhk','bath'])
 
-        # Encode location
-        encoded_loc = encoder.transform(df[["location"]])
-        encoded_df = pd.DataFrame(encoded_loc.toarray(),
-                                  columns=encoder.get_feature_names_out(["location"]))
+        # One-hot encode location
+        encoded_loc = encoder.transform(df[['location']])
+        encoded_df = pd.DataFrame(encoded_loc,
+                                  columns=encoder.get_feature_names_out(['location']))
+        
+        df = df.drop('location', axis=1)
+        df_final = pd.concat([df, encoded_df], axis=1)
 
-        # Final dataframe
-        df = pd.concat([df.drop("location", axis=1), encoded_df], axis=1)
+        # Align with training features
+        df_final = df_final.reindex(columns=feature_columns, fill_value=0)
 
-        # Add missing columns
-        for col in columns:
-            if col not in df.columns:
-                df[col] = 0
+        # Predict
+        pred = model.predict(df_final)[0]
+        return jsonify({"predicted_price_lakhs": round(float(pred), 2)})
 
-        df = df[columns]  # keep column order same
-
-        prediction = model.predict(df)[0]
-        return jsonify({"predicted_price_lakhs": round(float(prediction), 2)})
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": str(e)}), 400
 
-
-@app.route("/locations", methods=["GET"])
-def get_locations():
-    try:
-        locations = list(encoder.categories_[0])  # all unique locations
-        return jsonify({"locations": locations})
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-
+# ------------------- RUN -------------------
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,70 +1,49 @@
-/* Background */
 body {
-  font-family: Arial, sans-serif;
-  background: url("https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1350&q=80") no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  padding: 0;
-  color: #fff;
+    font-family: Arial, sans-serif;
+    background: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
 }
 
-/* Container */
 .container {
-  background: rgba(0, 0, 0, 0.75);
-  max-width: 400px;
-  margin: 80px auto;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
-  text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
 }
 
-/* Headings */
 h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Form elements */
-label {
-  display: block;
-  margin: 15px 0 5px;
-  text-align: left;
-  font-weight: bold;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-input, select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 14px;
+input, select, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
 }
 
-/* Button */
 button {
-  margin-top: 20px;
-  padding: 12px;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  background: #28a745;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-  background: #218838;
+    background-color: #45a049;
 }
 
-/* Result */
 #result {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #ffd700;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
